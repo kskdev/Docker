@@ -15,7 +15,7 @@
 |:-------------:|:---------:|
 | chainer       | 2.0.0     |
 
-APPEND-----------------------
+## Append Libraries
 | bhtsne        | 0.1.9     |
 
 ## How to build
