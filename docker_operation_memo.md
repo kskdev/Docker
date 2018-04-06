@@ -39,7 +39,7 @@
 `nvidia-docker build -t [ユーザ名]/[イメージの名前]:[バージョン] .`
 
 
-#### タグ付け(ただし，REPOSITORYとTAGが<none>になっている場合のみ)
+#### タグ付け(ただし，REPOSITORYとTAGがnoneになっている場合のみ)
 ImageID, REPOSITORY, TAGは `docker images`から確認.
 `docker tag imageID REPOSITORY:TAG`
 

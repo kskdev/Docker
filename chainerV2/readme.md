@@ -19,9 +19,9 @@
 ## How to build
 
 #### Build Image
-`nvidia-docker build -t osm:osumi .`
+`nvidia-docker build -t osm:chainer:v2 .`
 #### Check test
-` nvidia-docker run --rm osm:osumi nvidia-smi`
+`nvidia-docker run --rm osm:osumi:v2 nvidia-smi`
 #### Run Container
-`nvidia-docker run --rm -it -v /data/osumi/:/home/ osm:osumi`
+`nvidia-docker run --rm -it -v /data/osumi/:/home/ osm:osumi:v2`
 
