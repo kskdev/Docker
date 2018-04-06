@@ -67,8 +67,10 @@ RUN APT_INSTALL="apt-get install -y --no-install-recommends" && \
         && \
     ln -s /usr/bin/python3 /usr/local/bin/python && \
     pip3 --no-cache-dir install --upgrade pip && \
+    # $PIP_INSTALL \
+    #     setuptools \
+    #     && \
     $PIP_INSTALL \
-        setuptools \
         numpy \
         scipy \
         pandas \
