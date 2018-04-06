@@ -1,0 +1,19 @@
+### My Alias ###
+PS1='\[\e[1;31m\][Docker root]\[\e[0;31m\][\w]\n\[\e[0;37m\]>\[\e[m\] '
+
+
+
+
+# Alias Command
+alias vi='vim'
+alias use='du -d 1 -h'
+alias c='clear'
+alias cdd='cd /home'
+
+# Variable for SSH
+ascope='p14027@es1.dg.chubu.ac.jp'
+
+# Alias Command for SSH
+alias scope='ssh $ascope'
+
+
