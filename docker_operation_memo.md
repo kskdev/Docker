@@ -53,8 +53,7 @@ ImageID, REPOSITORY, TAGは `docker images`から確認.
 `docker rmi $(docker images -f "dangling=true" -q)`
 
 ###### *停止中のコンテナの全削除*
-```docker rm `docker ps -a -q`
-```
+`docker rm "docker ps -a -q"`
 
 
 #### コンテナ *"イメージ"* の削除
