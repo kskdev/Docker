@@ -6,15 +6,18 @@
 |:-------------:|:---------:|
 | cuda          | 8.0       |
 | cudnn         | v6        |
-| python        | 3.5       |
-| opencv        | latest    |
+| python        | 3.6       |
 
 ## Libraries by pip
 
 | Library       |  Version  |
 |:-------------:|:---------:|
+| opencv        | latest    |
+| pillow        | latest    |
+| scikit-image  | latest    |
 | chainer       | 2.0.0     |
-| bhtsne        | 0.1.9     |
+| cupy          | 1.0.0.1   |
+
 
 ## How to build
 
