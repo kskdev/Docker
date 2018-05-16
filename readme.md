@@ -1,14 +1,12 @@
 # Dockerfile
 
-## Environment
+## Environment chainerv2
 
 | Environment   |  Version  |
 |:-------------:|:---------:|
 | cuda          | 8.0       |
 | cudnn         | v6        |
 | python        | 3.6       |
-
-## Libraries by pip
 
 | Library       |  Version  |
 |:-------------:|:---------:|
@@ -18,13 +16,29 @@
 | chainer       | 2.0.0     |
 | cupy          | 1.0.0.1   |
 
+## Environment anaconda3pytorch
+
+| Environment   |  Version  |
+|:-------------:|:---------:|
+| cuda          | 9.0       |
+| cudnn         | v7        |
+| python        | 3.6       |
+
+| Library       |  Version  |
+|:-------------:|:---------:|
+| opencv3       | latest    |
+| pytorch       | latest    |
+| torchvision   | latest    |
+| visdom        | latest    |
+| dominate      | latest    |
+
 
 ## How to build
 
 #### Build Image
-`nvidia-docker build -t osm:chainer:v2 .`
+`nvidia-docker build -t foo/bar:baz .`
 #### Check test
-`nvidia-docker run --rm osm:osumi:v2 nvidia-smi`
+`nvidia-docker run --rm foo/bar:baz nvidia-smi`
 #### Run Container
-`nvidia-docker run --rm -it -v /data/osumi/:/home/ osm:osumi:v2`
+`nvidia-docker run --rm -it -v /data/osumi/:/home/ foo/bar:baz`
 
