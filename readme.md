@@ -42,5 +42,5 @@
 #### Check test
 `nvidia-docker run --rm repoName:TagName nvidia-smi`
 #### Run Container
-`nvidia-docker run --rm -it --name $B%3%s%F%J$KIU$1$kL>A0(B -v $B$*9%$-$J%[%9%H(BDIR:$B@\B3$7$?$$%3%s%F%J$N(BDIR repoName:TagName`
+`nvidia-docker run --rm -it --name コンテナに付ける名前 -v お好きなホストDIR:接続したいコンテナのDIR repoName:TagName`
 

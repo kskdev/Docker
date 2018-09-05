@@ -1,42 +1,42 @@
 # Build Guide
-$B%$%a!<%8$N%S%k%I$H%3%s%F%J$N:n@.J}K!$r4JC1$K@bL@(B($B$[$\HwK:O?(B)
+イメージのビルドとコンテナの作成方法を簡単に説明(ほぼ備忘録)
 
-## Docker Image$B$N%S%k%I(B
+## Docker Imageのビルド
 `
 nvidia-docker build --rm --no-cache -t conda3:440 .
 `
 
-### $B@bL@(B
+### 説明
 - ` nvidia-docker build `
- - Dockerfile $B$+$i(B Image $B$r%S%k%I(B
+ - Dockerfile から Image をビルド
 - ` --rm `
- - $B%$%a!<%8:n@.8eCf4V%$%a!<%8$r:o=|$9$k(B($BMW$O40@.$^$G:n$C$?CfESH>C<$J%U%!%$%k$O:o=|(B)
+ - イメージ作成後中間イメージを削除する(要は完成まで作った中途半端なファイルは削除)
 - ` --no-cache `
- - $BJ8;zNs$NDL$j%-%c%C%7%e$r;H$o$:$K%S%k%I(B
+ - 文字列の通りキャッシュを使わずにビルド
 - ` -t `
- - $B%S%k%I8e$K%$%a!<%8$N%j%]%8%H%jL>$H%?%0L>$rIUM?!%$3$3$G$O(B conda3:440 $B$HL?L>(B(RepoName:TagName)
+ - ビルド後にイメージのリポジトリ名とタグ名を付与．ここでは conda3:440 と命名(RepoName:TagName)
 - ` . `
- - $B%S%k%I$K;H$&(BDockerfile$B$N%G%#%l%/%H%j(B
+ - ビルドに使うDockerfileのディレクトリ
 
 
-## Docker Container $B$N:n@.(B
+## Docker Container の作成
 `
 nvidia-docker run --rm -it -v /home/osumi:/home/osumi -v /data/osumi:/data/osumi --name kskdevConda3  conda3:440
 `
 
-### $B@bL@(B
+### 説明
 - ` nvidia-docker run `
- - $B%3%s%F%J$N:n@.!%$3$N8e$m$KBgDq?'$s$J%*%W%7%g%s$,IUM?$5$l$k(B
+ - コンテナの作成．この後ろに大抵色んなオプションが付与される
 - ` --rm `
- - $B%3%s%F%J$N=*N;;~!$$=$N%3%s%F%J$rGK4~$9$k(B
+ - コンテナの終了時，そのコンテナを破棄する
 - ` -it `
- - $B%3%s%F%JFbIt$GA`:n$G$-$k$h$&$K$9$k(B
+ - コンテナ内部で操作できるようにする
 - ` -v `
- - $B;XDj$7$?%G%#%l%/%H%j$r%[%9%H$H6&M-$9$k!%J#?t;XDj$b2DG=(B
+ - 指定したディレクトリをホストと共有する．複数指定も可能
 - ` --name `
- - $B%3%s%F%J$KL>A0$rIU$1$k!%(B
+ - コンテナに名前を付ける．
 - ` conda3:440 `
- - $B:n@.$9$k%3%s%F%J$N(BImage$B$r;XDj(B
+ - 作成するコンテナのImageを指定
 
 
 
