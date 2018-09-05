@@ -16,7 +16,7 @@
 | chainer       | 2.0.0     |
 | cupy          | 1.0.0.1   |
 
-## Environment anaconda3pytorch
+## Environment anaconda3　4.4.0
 
 | Environment   |  Version  |
 |:-------------:|:---------:|
