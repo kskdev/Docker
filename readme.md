@@ -27,18 +27,20 @@
 | Library       |  Version  |
 |:-------------:|:---------:|
 | opencv3       | latest    |
-| pytorch       | latest    |
-| torchvision   | latest    |
+| pytorch       | 0.4.0     |
+| torchvision   | 0.2.0     |
 | visdom        | latest    |
 | dominate      | latest    |
+| cupy          | 4.2.0     |
+| chainer       | 4.2.0     |
 
 
 ## How to build
 
 #### Build Image
-`nvidia-docker build -t foo/bar:baz .`
+`nvidia-docker build -t repoName:TagName .`
 #### Check test
-`nvidia-docker run --rm foo/bar:baz nvidia-smi`
+`nvidia-docker run --rm repoName:TagName nvidia-smi`
 #### Run Container
-`nvidia-docker run --rm -it -v /data/osumi/:/home/ foo/bar:baz`
+`nvidia-docker run --rm -it --name コンテナに付ける名前 -v お好きなホストDIR:接続したいコンテナのDIR repoName:TagName`
 
