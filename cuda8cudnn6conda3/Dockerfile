@@ -1,6 +1,6 @@
 # https://github.com/qntfy/nvidia-docker-anaconda
 
-FROM nvidia/cuda:9.0-cudnn7-devel
+FROM nvidia/cuda:8.0-cudnn6-devel
 
 
 # Add some dependencies
