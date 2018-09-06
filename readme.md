@@ -31,8 +31,8 @@
 | torchvision   | 0.2.0     |
 | visdom        | latest    |
 | dominate      | latest    |
-| cupy          | 4.2.0     |
-| chainer       | 4.2.0     |
+| cupy-cuda90   | 4.4.1     |
+| chainer       | 4.3.1     |
 
 
 ## How to build
