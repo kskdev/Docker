@@ -46,8 +46,11 @@ RUN conda install -c menpo opencv3
 RUN conda install pytorch==0.4.0 torchvision==0.2.0 cuda90 -c pytorch
 RUN conda install -c conda-forge visdom
 RUN conda install -c conda-forge dominate
-RUN pip install cupy==4.2.0
-RUN pip install chainer==4.2.0
+
+RUN pip install bhtsne
+RUN pip install matplotlib
+RUN pip install cupy-cuda90==4.4.1
+RUN pip install chainer==4.3.1
 RUN conda remove pyqt
 # pyqt disturb to do training by chainer trainer.
  
