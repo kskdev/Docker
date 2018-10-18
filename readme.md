@@ -28,7 +28,7 @@
 |:-------------:|:---------:|
 | opencv3       | latest    |
 | pytorch       | 0.4.0     |
-| torchvision   | 0.2.0     |
+| torchvision   | 0.2.1     |
 | visdom        | latest    |
 | dominate      | latest    |
 | cupy-cuda90   | 4.4.1     |
