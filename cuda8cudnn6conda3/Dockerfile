@@ -12,7 +12,7 @@ RUN apt-get clean && apt-get update -y -qq && \
 WORKDIR /root
 RUN apt-get update
 RUN apt-get -f install
-RUN apt-get install -y git build-essential ncurses-dev lua5.2 lua5.2-dev luajit python-dev python3-dev ruby-dev
+RUN apt-get install -y git build-essential ncurses-dev lua5.2 lua5.2-dev luajit python-dev python3-dev ruby-dev libpng12-0-dev libgtk2.0-dev
 RUN git clone https://github.com/vim/vim
 WORKDIR /root/vim
 RUN git checkout -b v8.0.0008
@@ -35,7 +35,7 @@ RUN echo "alias c='clear'" >> /root/.bashrc && \
  
 
 # Install Anaconda3
-ENV LATEST_CONDA "4.4.0"
+ENV LATEST_CONDA "4.2.0"
 ENV PATH="/root/anaconda3/bin:${PATH}"
 RUN curl --silent -O https://repo.continuum.io/archive/Anaconda3-$LATEST_CONDA-Linux-x86_64.sh \
     && bash Anaconda3-$LATEST_CONDA-Linux-x86_64.sh -b -p /root/anaconda3
@@ -43,11 +43,11 @@ RUN curl --silent -O https://repo.continuum.io/archive/Anaconda3-$LATEST_CONDA-L
 
 # Install External Libs for Deep Learning
 RUN conda install -c menpo opencv3
-RUN conda install pytorch==0.4.0 torchvision==0.2.1 cuda90 -c pytorch
-RUN conda install -c conda-forge visdom
-RUN conda install -c conda-forge dominate
-RUN pip install cupy==4.2.0
-RUN pip install chainer==4.2.0
+# RUN conda install pytorch==0.4.0 torchvision==0.2.1 cuda90 -c pytorch
+# RUN conda install -c conda-forge visdom
+# RUN conda install -c conda-forge dominate
+RUN pip install cupy==1.0.0.1
+RUN pip install chainer==2.0.0
 RUN conda remove pyqt
 # pyqt disturb to do training by chainer trainer.
  
