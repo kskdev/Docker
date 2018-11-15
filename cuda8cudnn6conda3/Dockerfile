@@ -12,7 +12,7 @@ RUN apt-get clean && apt-get update -y -qq && \
 WORKDIR /root
 RUN apt-get update
 RUN apt-get -f install
-RUN apt-get install -y git build-essential ncurses-dev lua5.2 lua5.2-dev luajit python-dev python3-dev ruby-dev
+RUN apt-get install -y git build-essential ncurses-dev lua5.2 lua5.2-dev luajit python-dev python3-dev ruby-dev libpng12-0 libgtk2.0-dev
 RUN git clone https://github.com/vim/vim
 WORKDIR /root/vim
 RUN git checkout -b v8.0.0008
