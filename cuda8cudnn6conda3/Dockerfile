@@ -43,7 +43,7 @@ RUN curl --silent -O https://repo.continuum.io/archive/Anaconda3-$LATEST_CONDA-L
 
 # Install External Libs for Deep Learning
 RUN conda install -c menpo opencv3
-RUN conda install pytorch==0.4.0 torchvision==0.2.1 cuda90 -c pytorch
+RUN conda install pytorch==0.4.0 torchvision==0.2.1 cuda80 -c pytorch
 RUN conda install -c conda-forge visdom
 RUN conda install -c conda-forge dominate
 RUN pip install cupy==4.2.0
