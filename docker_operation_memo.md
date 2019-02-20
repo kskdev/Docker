@@ -2,16 +2,23 @@
 実行した時の環境はUbuntu 14.04LTS
 そのためUbuntu14.04LTS以外での保証はしない.
 
+ちょっと情報が古いかもしれないので更新版を載せる予定？？
+いずれ新しい方で統一すると思われる．
+(別に古くても動くと思う...)
+
 ## 基本操作
 
 #### Docker imageの一覧表示
-`docker images`
+old: `docker images`
+new: `docker image ls`
+new: `docker image ls -a`
 
 
 #### コンテナの表示
-動作中のコンテナ: `docker ps`
-すべてのコンテナ: `docker ps -a`
-
+old: 動作中のコンテナ: `docker ps`
+old: すべてのコンテナ: `docker ps -a`
+new: 動作中のコンテナ: `docker container ls`
+new: すべてのコンテナ: `docker container ls -a`
 
 #### ホストのディレクトリをマウントしてコンテナ起動
 `nvidia-docker run -it -v [ホストディレクトリの絶対パス]:[コンテナの絶対パス] [イメージ名] [コマンド]`
