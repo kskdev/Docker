@@ -1,5 +1,8 @@
 # Dockerfile
 
+Readme 周りはかなり放置されてひどいので無視すること(面倒なので直す気が無い)
+
+
 ## Environment chainerv2
 
 | Environment   |  Version  |
