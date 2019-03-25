@@ -143,6 +143,7 @@ git \\
 curl \\
 libjpeg-dev \\
 libpng-dev \\
+libgtk2.0-dev \\
 software-properties-common \\
 && \\
 rm -rf /var/lib/apt/lists/* && \\" > 'Dockerfile'
