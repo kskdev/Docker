@@ -46,14 +46,16 @@ do
     echo -n 'please input again : ' && read CONDA_PY_VER
 done
 
+# Minicondaも選択肢の１つにしていたが，ほぼ使わないので削除
+# echo -n 'Conda Distribution (Anaconda or Miniconda): ' && read CONDA_DIS
+# while ! [ $(echo ${CONDA_DIS} | grep -E '^(Anaconda|Miniconda)$') ]
+# do
+#     echo -n 'please input again : ' && read CONDA_DIS
+# done
+CONDA_DIS='Anaconda'
 
-echo -n 'Conda Distribution (Anaconda or Miniconda): ' && read CONDA_DIS
-while ! [ $(echo ${CONDA_DIS} | grep -E '^(Anaconda|Miniconda)$') ]
-do
-    echo -n 'please input again : ' && read CONDA_DIS
-done
-
-echo 'Ref : https://repo.continuum.io/{archive|miniconda}/ (e.g. 5.3.1 , 4.5.1)'
+# echo 'Ref : https://repo.continuum.io/{archive|miniconda}/ (e.g. 5.3.1 , 4.5.1)'
+echo 'Ref : https://repo.continuum.io/{archive|miniconda}/ (e.g. 5.3.1)'
 echo -n 'Conda ver : ' && read CONDA_VER
 while ! [ $(echo ${CONDA_VER} | grep -E '^([0-9]*\.[0-9]*\.[0-9]*)$') ]
 do
@@ -121,6 +123,9 @@ FROM nvidia/cuda:${CUDA}-cudnn${CUDNN}-devel-ubuntu${UBUNTU}
 # Work Directory location:
 ENV WORK_DIR=/root
 WORKDIR \$WORK_DIR
+
+# Copy jupyter setup file (run this file in container)
+ADD ./set_jupyter_lab.sh ${WORK_DIR}
 
 # Port forward (6006:TensorboardX, 8888:Jupyter):
 EXPOSE 6006 8888
@@ -229,13 +234,12 @@ fi
 
 echo \
 "# =========================================
-# Additional Library
+# Additional Library (for visualization) 
 # =========================================
 pip install \\
 tensorflow \\
 tensorboardX \\
 && \\" >> 'Dockerfile'
-
 
 
 echo \
