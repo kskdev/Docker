@@ -1,52 +1,25 @@
 #!/bin/bash
 
 # osmksk05 専用のDockerfile Generator
-# 何故専用なのかはvim8のプラグインが自分用のだから
-# ---コマンドの意味 ---
+# 何故専用なのかはneovimのプラグインが自分用のだから
+# ---コマンドの意味(忘れやすいため) ---
 # echo -n "hoge"   ：hogeを表示した後改行しない
 # echo -e "\nhoge" ：\nを改行コードとして認識する
 
 set -e
+
 echo '============================================================'
 echo 'Dockerfile Generator'
 echo '============================================================'
 
 
-echo ''
-echo '--- Select base image ---'
+echo -e '\n\n--- Select base image ---'
+echo -n 'CUDA ver (e.g. 9.0 / 10.0): ' && read CUDA
+echo -n 'CuDNN ver (e.g. 6 / 7): ' && read CUDNN
+echo -n 'Ubuntu ver (e.g. 16.04 / 18.04): ' && read UBUNTU
 
-echo -n 'CUDA ver (8.0 or 9.0 or 10.0): ' && read CUDA
-while ! [ $(echo ${CUDA} | grep -E '^(8\.0|9\.0|10\.0)$') ]
-do
-    echo -n 'please input again : ' && read CUDA
-done
-
-
-echo -n 'CuDNN ver (6 or 7): ' && read CUDNN
-while ! [ $(echo ${CUDNN} | grep -E '^(6|7)$') ]
-do
-    echo -n 'please input again : ' && read CUDNN
-done
-
-
-echo -n 'Ubuntu ver (16.04 or 18.04): ' && read UBUNTU
-while ! [ $(echo ${UBUNTU} | grep -E '^(16\.04|18\.04)$') ]
-do
-    echo -n 'please input again : ' && read UBUNTU
-done
-
-
-
-echo ''
-echo '--- Select Conda Environment ---'
-
+echo -e '\n\n--- Select Conda Environment ---'
 echo -n 'Python ver (2 or 3): ' && read CONDA_PY_VER
-while ! [ $(echo ${CONDA_PY_VER} | grep -E '^(2|3)$') ]
-do
-    echo -n 'please input again : ' && read CONDA_PY_VER
-done
-
-# Minicondaも選択肢の１つにしていたが，ほぼ使わないので削除
 # echo -n 'Conda Distribution (Anaconda or Miniconda): ' && read CONDA_DIS
 # while ! [ $(echo ${CONDA_DIS} | grep -E '^(Anaconda|Miniconda)$') ]
 # do
@@ -75,33 +48,33 @@ echo '--- Select Deep Learning Library ---'
 
 echo -n 'Do you use Pytorch? [y/n]: ' && read USE_PYTORCH
 if [ ${USE_PYTORCH} = 'y' ]; then
-	echo -n 'pytorch ver (0.4.1 or 1.0.0): ' && read PYTORCH
+    echo -n 'pytorch ver (0.4.1 or 1.0.0): ' && read PYTORCH
     while ! [ $(echo ${PYTORCH} | grep -E '^(0\.4\.[01]|1\.0\.[01])$') ]
     do
         echo -n 'please input again : ' && read PYTORCH
     done
 
-	echo -n 'torchvision ver (0.2.0 or 0.2.1): ' && read TORCHVISION
+    echo -n 'torchvision ver (0.2.0 or 0.2.1): ' && read TORCHVISION
     while ! [ $(echo ${TORCHVISION} | grep -E '^0\.2\.(0|1)$') ]
     do
         echo -n 'please input again : ' && read TORCHVISION
     done
     CUDATOOLKIT=${CUDA}
 else
-	:
+    :
 fi
 
 echo ''
 echo -n 'Do you use Chainer? [y/n]: ' && read USE_CHAINER
 if [ ${USE_CHAINER} = 'y' ]; then
-	echo -n 'chainer ver : ' && read CHAINER
+    echo -n 'chainer ver : ' && read CHAINER
     while ! [ $(echo ${CHAINER} | grep -E '^([0-9]*\.[0-9]*\.[0-9]*)$') ]
     do
         echo -n 'please input again : ' && read CHAINER
     done
     CUPY=cupy-cuda${CUDA/./}
 else
-	:
+    :
 fi
 
 
@@ -151,17 +124,16 @@ rm -rf /var/lib/apt/lists/* && \\" > 'Dockerfile'
 
 echo \
 "# =========================================
-# Install Vim8 with Plugins for kskdev
+# Install neovim with Plugins for kskdev
 # =========================================
-add-apt-repository ppa:jonathonf/vim && \\
+add-apt-repository ppa:neovim-ppa/unstable && \\
 apt-get update && \\
-apt-get install -y vim && \\
-# Install Vim with my plugins (Only Vim8)
+apt-get install neovim && \\
+# Install neovim with my plugins (for neovim) 
 git clone https://github.com/kskdev/vim && \\
-mkdir \$WORK_DIR/.vim && \\
-cp vim/*.toml \$WORK_DIR/.vim/ && \\
-mv vim/vimrc \$WORK_DIR/.vimrc && \\
-/bin/bash -c 'vim -e -c \":silent! call dein#install() | :q\"' && \\
+mkdir -p \$WORK_DIR/.config/nvim && \\
+cp vim/dein.toml \$WORK_DIR/.config/nvim/ && \\
+cp vim/vimrc \$WORK_DIR/.config/nvim/init.vim && \\
 rm -rf vim" >> 'Dockerfile'
 
 
@@ -196,7 +168,7 @@ echo \
 conda install -c menpo opencv3 \\
 && \\" >> 'Dockerfile'
 else
-	:
+    :
 fi
 
 
@@ -212,7 +184,7 @@ torchvision=${TORCHVISION} \\
 cudatoolkit=${CUDATOOLKIT} \\
 && \\" >> 'Dockerfile'
 else
-	:
+    :
 fi
 
 
@@ -227,7 +199,7 @@ chainer==${CHAINER} \\
 ${CUPY} \\
 && \\" >> 'Dockerfile'
 else
-	:
+    :
 fi
 
 
@@ -238,7 +210,7 @@ echo \
 # =========================================
 pip install \\
 tensorflow \\
-tensorboardX \\
+tensorboardX==1.5 \\
 && \\" >> 'Dockerfile'
 
 
