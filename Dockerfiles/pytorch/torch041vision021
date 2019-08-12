@@ -71,6 +71,7 @@ mkdir -p $WORK_DIR/.config/nvim && \
 cp vim/dein.toml $WORK_DIR/.config/nvim/ && \
 cp vim/vimrc $WORK_DIR/.config/nvim/init.vim && \
 conda install -c conda-forge neovim=0.3.1 && \
+conda install -c conda-forge python-language-server && \
 nvim -e -c ":silent! call dein#install() | :q" && \
 nvim -e -c ":silent! UpdateRemotePlugins | :q" && \
 # =========================================
