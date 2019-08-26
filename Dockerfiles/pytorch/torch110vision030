@@ -1,8 +1,8 @@
 # *****************************************************
 # Image Build example:
-#   docker build ./ --file=./torch110vision030 --force-rm=true --no-cache=true --rm=true --tag=pytorch:1.1.0
+#   docker build ./ --file=./torch110vision030 --force-rm=true --no-cache=true --rm=true --tag=cuda90conda3531torch110:v1
 # Run Container example:
-#   docker run --runtime=nvidia --rm -it -v /HostDIR:/root/work --name containerName pytorch:1.1.0
+#   docker run --runtime=nvidia --rm -it -v /HostDIR:/root/work --name containerName cuda90conda3531torch110:v1
 # *****************************************************
 
 # =========================================
@@ -34,19 +34,23 @@ rm -rf /var/lib/apt/lists/*
 # =========================================
 ENV PATH=${WORK_DIR}/Conda/bin:${PATH}
 # --- Anaconda3 ---
-# RUN curl --silent -O https://repo.continuum.io/archive/Anaconda3-5.3.1-Linux-x86_64.sh && \
-# bash Anaconda3-5.3.1-Linux-x86_64.sh -b -p ${WORK_DIR}/Conda && \
-# rm ${WORK_DIR}/Anaconda3-5.3.1-Linux-x86_64.sh
+RUN curl --silent -O https://repo.continuum.io/archive/Anaconda3-5.3.1-Linux-x86_64.sh && \
+bash Anaconda3-5.3.1-Linux-x86_64.sh -b -p ${WORK_DIR}/Conda && \
+conda update --all && \
+rm ${WORK_DIR}/Anaconda3-5.3.1-Linux-x86_64.sh && \
 # --- Miniconda3 ---
-RUN curl --silent -O https://repo.continuum.io/miniconda/Miniconda3-4.6.14-Linux-x86_64.sh && \
-bash Miniconda3-4.6.14-Linux-x86_64.sh -b -p ${WORK_DIR}/Conda && \
-conda update -n base -c defaults conda && \
-rm ${WORK_DIR}/Miniconda3-4.6.14-Linux-x86_64.sh && \
+# RUN curl --silent -O https://repo.continuum.io/miniconda/Miniconda3-4.6.14-Linux-x86_64.sh && \
+# bash Miniconda3-4.6.14-Linux-x86_64.sh -b -p ${WORK_DIR}/Conda && \
+# conda update --all && \
+# rm ${WORK_DIR}/Miniconda3-4.6.14-Linux-x86_64.sh && \
 # =========================================
 # Install python library with conda
 # =========================================
 conda install -c conda-forge \
-opencv=3.4.2 && \
+umap-learn \
+opencv=3.4.2 \
+neovim=0.3.1 \
+python-language-server && \
 # =========================================
 # Install Pytorch 
 # =========================================
@@ -57,12 +61,12 @@ cudatoolkit=9.0 && \
 # =========================================
 # Additional pip library
 # =========================================
-# RUN pip install \
-# umap-learn
+pip install \
+dominate
 # =========================================
 # Install neovim with plugins
 # =========================================
-add-apt-repository ppa:neovim-ppa/unstable && \
+RUN add-apt-repository ppa:neovim-ppa/unstable && \
 apt-get update && \
 apt-get install neovim -y --no-install-recommends && \
 # --- Install plugin for Neovim --- 
@@ -70,14 +74,12 @@ git clone https://github.com/kskdev/vim && \
 mkdir -p $WORK_DIR/.config/nvim && \
 cp vim/dein.toml $WORK_DIR/.config/nvim/ && \
 cp vim/vimrc $WORK_DIR/.config/nvim/init.vim && \
-conda install -c conda-forge neovim=0.3.1 && \
-conda install -c conda-forge python-language-server && \
 nvim -e -c ":silent! call dein#install() | :q" && \
-nvim -e -c ":silent! UpdateRemotePlugins | :q" && \
+nvim -e -c ":silent! UpdateRemotePlugins | :q"
 # =========================================
 # Add alias commands
 # =========================================
-/bin/bash && \
+RUN /bin/bash && \
 apt-get clean && \
 apt-get autoremove && \
 echo "set completion-ignore-case on" > $WORK_DIR/.inputrc && \

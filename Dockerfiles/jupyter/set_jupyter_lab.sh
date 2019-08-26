@@ -6,19 +6,23 @@
 # もし，Jupyter Labが入ってなかったらpip install jupyterlabで入る(Anacondaなら入ってるはず...)
 
 set -e
+echo ''
 echo '============================================================'
 echo 'Jupyter lab setting'
 echo '============================================================'
+echo ''
 
 # ホームディレクトリの設定
 home_dir=/root
 
-echo '*** Set Passward ***'
+echo ''
+echo '*** Set Password ***'
 mkdir -p ${home_dir}/.jupyter
 jupyter notebook password
 
-echo 'Generateing  config file...'
 jupyter notebook --generate-config
+echo ''
+echo 'Generated config file.'
 
 TMP_PW=$(cat ${home_dir}/.jupyter/jupyter_notebook_config.json | egrep --only-matching 'sha1:[0-9a-f]*:[0-9a-f]*')
 APADDR="c.NotebookApp.ip = '*'"
@@ -31,28 +35,51 @@ echo $PSWORD >> ${home_dir}/.jupyter/jupyter_notebook_config.py
 echo $BROSER >> ${home_dir}/.jupyter/jupyter_notebook_config.py
 echo $APPORT >> ${home_dir}/.jupyter/jupyter_notebook_config.py
 
-echo '*** Install Jupyter lab extensions ***'
-echo 'Install Node.js (preprocessing)'
+echo ''
+echo '============================================================'
+echo 'Install Jupyter lab extensions'
+echo '============================================================'
+echo ''
+echo '*** Install Node.js ***'
 # Node.jsの導入(バージョンは適宜修正してください)
-curl -sL https://deb.nodesource.com/setup_11.x | bash -
-apt-get install -y --no-install-recommends nodejs
+# curl -sL https://deb.nodesource.com/setup_11.x | bash -
+# apt-get install -y --no-install-recommends nodejs
+conda install -c conda-forge nodejs
 
-echo 'Install extensions'
+echo '*** Install extensions ***'
 
 # 変数名や型、内容を常に横に表示しておける. デバッグのお供になるかも?
-jupyter labextension install @lckr/jupyterlab_variableinspector
+# 動かなくなった (2019/08/26) 恐らくjupyterlab のバージョンを上げたから
+# jupyter labextension install "@lckr/jupyterlab_variableinspector"
 
 # Tensorboard 連携
 # TODO エラー吐くけど動くので放置
 pip install jupyter-tensorboard
-jupyter labextension install jupyterlab_tensorboard
-jupyter serverextension enable --py jupyterlab_tensorboard
+jupyter labextension install "jupyterlab_tensorboard"
+# jupyter serverextension enable --py jupyterlab_tensorboard
 
 # plotly用jupyter連携用extension
 pip install plotly
-jupyter labextension install @jupyterlab/plotly-extension
+jupyter labextension install "@jupyterlab/plotly-extension"
+
+# # Notebook の補完がLSPベースになる(補完がさらに強くなる)
+# # まだ動かなくない...(2019/08/26)
+# jupyter labextension install "@krassowski/jupyterlab-lsp"
+# # サーバリストを記述したファイルを生成
+# SERVER_YML=${home_dir}/servers.yml
+# touch ${SERVER_YML}
+# echo "langservers:" >> ${SERVER_YML}
+# echo "  python:"    >> ${SERVER_YML}
+# echo "    - pyls"   >> ${SERVER_YML}
+# node ${home_dir}/Conda/share/jupyter/lab/staging/node_modules/jsonrpc-ws-proxy/dist/server.js --port 3000 --languageServers ${SERVER_YML}
+
 
 # Jupyter 起動
 # 起動したらそのコンテナは放っておけば良い
 # 以下のコマンドを実行する (ポート番号(e.g. 8888)は各自でお願いいたします)
-jupyter lab --ip=0.0.0.0 --port=8888 --allow-root
+echo ''
+echo '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
+echo 'Finished installing extensions'
+echo '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
+echo ''
+echo 'Please run : jupyter lab --ip=0.0.0.0 --port=8888 --allow-root'
