@@ -40,11 +40,10 @@ echo '============================================================'
 echo 'Install Jupyter lab extensions'
 echo '============================================================'
 echo ''
-echo '*** Install Node.js ***'
+# echo '*** Install Node.js ***'
 # Node.jsの導入(バージョンは適宜修正してください)
 # curl -sL https://deb.nodesource.com/setup_11.x | bash -
 # apt-get install -y --no-install-recommends nodejs
-conda install -c conda-forge nodejs
 
 echo '*** Install extensions ***'
 

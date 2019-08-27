@@ -49,8 +49,16 @@ rm ${WORK_DIR}/Anaconda3-5.3.1-Linux-x86_64.sh
 RUN conda install -c conda-forge \
 umap-learn \
 opencv=3.4.2 \
+nodejs \
 neovim=0.3.1 \
 python-language-server
+# =========================================
+# Install Pytorch
+# =========================================
+RUN conda install -c pytorch \
+pytorch=0.4.1 \
+torchvision=0.2.1 \
+cudatoolkit=9.0
 # =========================================
 # Install python libs via pip
 # =========================================
