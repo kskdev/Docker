@@ -23,6 +23,7 @@ build-essential \
 cmake \
 git \
 curl \
+wget \
 libjpeg-dev \
 libpng-dev \
 libgtk2.0-dev \
@@ -49,7 +50,7 @@ rm ${WORK_DIR}/Anaconda3-5.3.1-Linux-x86_64.sh && \
 conda install -c conda-forge \
 umap-learn \
 opencv=3.4.2 \
-neovim=0.3.1 \
+neovim=0.4.2 \
 python-language-server && \
 # =========================================
 # Install Pytorch 

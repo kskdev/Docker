@@ -47,24 +47,50 @@ echo ''
 
 echo '*** Install extensions ***'
 
+# 操作がvimになる.
+# jupyter labextension install "jupyterlab_vim" の代替
+pip install jupyter_contrib_nbextensions
+jupyter contrib nbextension install --user
+mkdir -p $(jupyter --data-dir)/nbextensions
+cd $(jupyter --data-dir)/nbextensions
+git clone https://github.com/lambdalisue/jupyter-vim-binding vim_binding
+jupyter nbextension enable vim_binding/vim_binding
+
 # 変数名や型、内容を常に横に表示しておける. デバッグのお供になるかも?
 # 動かなくなった (2019/08/26) 恐らくjupyterlab のバージョンを上げたから
-# jupyter labextension install "@lckr/jupyterlab_variableinspector"
+# バージョンの違いで入らない (2019/01/15追記)
+# jupyter labextension install @lckr/jupyterlab_variableinspector
 
 # Tensorboard 連携
 # TODO エラー吐くけど動くので放置
 pip install jupyter-tensorboard
-jupyter labextension install "jupyterlab_tensorboard"
+jupyter labextension install jupyterlab_tensorboard
 # jupyter serverextension enable --py jupyterlab_tensorboard
 
 # plotly用jupyter連携用extension
 pip install plotly
-jupyter labextension install "@jupyterlab/plotly-extension"
+# jupyter labextension install "@jupyterlab/plotly-extension"
+jupyter labextension install @jupyterlab/plotly-extension
 
-# # Notebook の補完がLSPベースになる(補完がさらに強くなる)
-# # まだ動かなくない...(2019/08/26)
-# jupyter labextension install "@krassowski/jupyterlab-lsp"
-# # サーバリストを記述したファイルを生成
+# サイドのタブにmarkdownの見出しとか作ってくれるextension
+# .ipynb が長くなってしまった時に簡単にジャンプできるようになる.
+# jupyter labextension install "@jupyterlab/toc"
+jupyter labextension install @jupyterlab/toc
+
+# 図形を書く
+jupyter labextension install jupyterlab-drawio
+
+# csv / json をグラフィカルに表示
+# バージョンの違いで入らない (2019/01/15追記)
+# jupyter labextension install jupyterlab_voyager
+
+# Notebook の補完がLSPベースになる(補完がさらに強くなる)
+# まだ動かなくない...(2019/08/26)
+# バージョンの違いで入らない (2019/01/15追記)
+# pip install --pre jupyter-lsp
+# jupyter labextension install @krassowski/jupyterlab-lsp
+# pip install python-language-server[all]
+# サーバリストを記述したファイルを生成
 # SERVER_YML=${home_dir}/servers.yml
 # touch ${SERVER_YML}
 # echo "langservers:" >> ${SERVER_YML}

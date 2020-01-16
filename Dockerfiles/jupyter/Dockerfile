@@ -4,11 +4,18 @@
 # Run Container:
 #   docker run --runtime=nvidia --rm -it -v /HostDIR:/root/work --port=8888:8888 --name containerName kosumike/cuda90anaconda3531jupyterlab:v1
 # *****************************************************
+# *****************************************************
+# Image Build example:
+#   docker build ./ --file=./Dockerfile --force-rm=true --no-cache=true --rm=true --tag=kosumike/cuda101torch120vision040jupyterlab:v1
+# Run Container example:
+#   docker run --runtime=nvidia --rm -it -v /HostDIR:/root/work --port=8888:8888 --name containerName kosumike/cuda101torch120vision040jupyterlab:v1
+# *****************************************************
 
 # =========================================
 # Set Versions
 # =========================================
-FROM nvidia/cuda:9.0-cudnn7-devel-ubuntu16.04
+# FROM nvidia/cuda:9.0-cudnn7-devel-ubuntu16.04
+FROM nvidia/cuda:10.1-cudnn7-devel-ubuntu18.04
 
 # Work Directory location:
 ENV WORK_DIR=/root
@@ -29,6 +36,7 @@ build-essential \
 cmake \
 git \
 curl \
+vim \
 libjpeg-dev \
 libpng-dev \
 libgtk2.0-dev \
@@ -49,36 +57,28 @@ rm ${WORK_DIR}/Anaconda3-5.3.1-Linux-x86_64.sh
 RUN conda install -c conda-forge \
 umap-learn \
 opencv=3.4.2 \
-nodejs \
-neovim=0.3.1 \
-python-language-server
+nodejs
 # =========================================
 # Install Pytorch
 # =========================================
-RUN conda install -c pytorch \
-pytorch=0.4.1 \
-torchvision=0.2.1 \
-cudatoolkit=9.0
+# RUN conda install -c pytorch \
+# pytorch=0.4.1 \
+# torchvision=0.2.1 \
+# cudatoolkit=9.0
+RUN conda install \
+pytorch==1.2.0 \
+torchvision==0.4.0 \
+cudatoolkit=10.0 \
+-c pytorch
 # =========================================
 # Install python libs via pip
 # =========================================
 RUN pip install \
-tensorflow \
-tensorboardX==1.4 \
-bhtsne
-# =========================================
-# Install neovim with plugins
-# =========================================
-RUN add-apt-repository ppa:neovim-ppa/unstable && \
-apt-get update && \
-apt-get install neovim -y --no-install-recommends && \
-# --- Install plugin for Neovim --- 
-git clone https://github.com/kskdev/vim && \
-mkdir -p $WORK_DIR/.config/nvim && \
-cp vim/dein.toml $WORK_DIR/.config/nvim/ && \
-cp vim/vimrc $WORK_DIR/.config/nvim/init.vim && \
-nvim -e -c ":silent! call dein#install() | :q" && \
-nvim -e -c ":silent! UpdateRemotePlugins | :q"
+# tensorflow \
+# tensorboardX==1.4
+# tensorboardX==1.4 \
+bhtsne \
+dominate
 # =========================================
 # Add Alias Commands
 # =========================================
@@ -88,6 +88,6 @@ apt-get autoremove && \
 echo "set completion-ignore-case on" > $WORK_DIR/.inputrc && \
 echo "alias c='clear'" >> $WORK_DIR/.bashrc && \
 echo "alias use='du -d 1 -h'" >>$WORK_DIR/.bashrc && \
-echo "alias vi='nvim'" >> $WORK_DIR/.bashrc && \
+echo "alias vi='vim'" >> $WORK_DIR/.bashrc && \
 echo "Please run 'set_jupyter_lab.sh' in container."
 
